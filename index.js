@@ -32,6 +32,20 @@ closeButton.addEventListener("click", (event) => {
   console.log(myLibrary);
   modal.close();
 
+  //add book to DOM tree
+  let book = document.createElement("div");
+  let remove = document.createElement("button");
+  book.textContent = title.value;
+  remove.textContent = "REMOVE"
+  document.body.appendChild(book);
+  book.appendChild(remove);
+
+  remove.addEventListener("click", () => {
+    book.remove();
+    //remove from library as well
+  })
+
+
   //reset fields
   author.value = "";
   title.value = "";
@@ -39,5 +53,4 @@ closeButton.addEventListener("click", (event) => {
   read.value = "";
 })
 
-//add button on each book to remove from library
 //add button on each book to change "read" status
