@@ -36,13 +36,19 @@ closeButton.addEventListener("click", (event) => {
   let book = document.createElement("div");
   let remove = document.createElement("button");
   book.textContent = title.value;
+  book.setAttribute("data-index-number", `${myLibrary.length - 1}`);
   remove.textContent = "REMOVE"
   document.body.appendChild(book);
   book.appendChild(remove);
 
   remove.addEventListener("click", () => {
-    book.remove();
+    console.log(book);
+    let index = book.getAttribute("data-index-number");
     //remove from library as well
+    myLibrary.splice(index, 1, "None");
+    book.remove();
+
+    console.log(myLibrary);
   })
 
 
