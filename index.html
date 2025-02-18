@@ -8,6 +8,15 @@
     <script src="index.js" defer></script>
 </head>
 <body>
-    
+    <button data-open-modal>New Book</button>
+
+    <dialog>
+        <div>Submit New Book</div>
+        <div><label for="author">Author <input type="text" name="author" id="author"></label></div>
+        <div><label for="title">Title <input type="text" name="title" id="title"></label></div>
+        <div><label for="pages">Pages <input type="text" name="pages" id="pages"></label></div>
+        <div><label for="read">Read <input type="text" name="read" id="read"></label></div>
+        <button data-close-modal>Submit</button>
+    </dialog>
 </body>
 </html>
