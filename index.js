@@ -32,25 +32,7 @@ closeButton.addEventListener("click", (event) => {
   console.log(myLibrary);
   modal.close();
 
-  //add book to DOM tree
-  let book = document.createElement("div");
-  let remove = document.createElement("button");
-  book.textContent = title.value;
-  book.setAttribute("data-index-number", `${myLibrary.length - 1}`);
-  remove.textContent = "REMOVE"
-  document.body.appendChild(book);
-  book.appendChild(remove);
-
-  remove.addEventListener("click", () => {
-    console.log(book);
-    let index = book.getAttribute("data-index-number");
-    //remove from library as well
-    myLibrary.splice(index, 1, "None");
-    book.remove();
-
-    console.log(myLibrary);
-  })
-
+  renderLibrary();
 
   //reset fields
   author.value = "";
@@ -58,5 +40,32 @@ closeButton.addEventListener("click", (event) => {
   pages.value = "";
   read.value = "";
 })
+
+//renders library to DOM
+function renderLibrary(){
+  //reset DOM
+  let del = document.querySelector("body > div");
+  document.body.removeChild(del);
+  let library = document.createElement("div");
+  document.body.appendChild(library)
+
+  for (let i = 0; i < myLibrary.length; i++){
+    let book = document.createElement("div");
+    let remove = document.createElement("button");
+    currBook = myLibrary[i];
+    book.textContent = currBook.title;
+    book.setAttribute("data-index-number", `${i}`);
+    remove.textContent = "REMOVE";
+    library.appendChild(book);
+    book.appendChild(remove);
+
+    remove.addEventListener("click", () => {
+      let index = book.getAttribute("data-index-number");
+      myLibrary.splice(index, 1);
+      renderLibrary()
+      book.remove();
+    })
+  }
+}
 
 //add button on each book to change "read" status
