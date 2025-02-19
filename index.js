@@ -1,14 +1,13 @@
 const myLibrary = [];
 
-function Book(author, title, pages, read) {
+function Book(author, title, pages) {
   this.author = author;
   this.title = title;
   this.pages = pages;
-  this.read = read;
 }
 
-function addBookToLibrary(author, title, pages, read) {
-  const book = new Book(author, title, pages, read);
+function addBookToLibrary(author, title, pages) {
+  const book = new Book(author, title, pages);
   myLibrary.push(book);
 }
 
@@ -26,9 +25,8 @@ closeButton.addEventListener("click", (event) => {
   let author = document.querySelector("#author");
   let title = document.querySelector("#title");
   let pages = document.querySelector("#pages");
-  let read = document.querySelector("#read");
 
-  addBookToLibrary(author.value, title.value, pages.value, read.value);
+  addBookToLibrary(author.value, title.value, pages.value);
   console.log(myLibrary);
   modal.close();
 
@@ -38,7 +36,6 @@ closeButton.addEventListener("click", (event) => {
   author.value = "";
   title.value = "";
   pages.value = "";
-  read.value = "";
 })
 
 //renders library to DOM
@@ -50,14 +47,22 @@ function renderLibrary(){
   document.body.appendChild(library)
 
   for (let i = 0; i < myLibrary.length; i++){
-    let book = document.createElement("div");
-    let remove = document.createElement("button");
     currBook = myLibrary[i];
+
+    let book = document.createElement("div");
     book.textContent = currBook.title;
     book.setAttribute("data-index-number", `${i}`);
-    remove.textContent = "REMOVE";
     library.appendChild(book);
+
+    let remove = document.createElement("button");
+    remove.textContent = "REMOVE";
     book.appendChild(remove);
+
+    let read = document.createElement("button");
+    read.textContent = "READ";
+    Book.prototype.status = false; //???
+    console.log(Book.prototype.status);
+    book.appendChild(read);
 
     remove.addEventListener("click", () => {
       let index = book.getAttribute("data-index-number");
@@ -65,7 +70,24 @@ function renderLibrary(){
       renderLibrary()
       book.remove();
     })
+
+    read.addEventListener("click", () => {
+      if (book.status){
+        book.status = false;
+      } else {
+        book.status = true;
+      }
+      console.log(book.status)
+    })
   }
 }
 
 //add button on each book to change "read" status
+// function toggle(book){
+//   if (book.prototype.status){
+//     book.prototype.status = false;
+//   } else {
+//     book.prototype.status = true;
+//   }
+//   console.log(book.prototype.status)
+// }
