@@ -30,7 +30,7 @@ openButton.addEventListener("click", () => {
 
 //submit button, store form contents in myLibrary array
 closeButton.addEventListener("click", (event) => {
-  event.preventDefault(); //???
+  event.preventDefault(); //not submitting to server, does not clear input elements
   let author = document.querySelector("#author");
   let title = document.querySelector("#title");
   let pages = document.querySelector("#pages");
