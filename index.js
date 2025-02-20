@@ -49,7 +49,7 @@ closeButton.addEventListener("click", (event) => {
   read.value = "";
 })
 
-//renders library to DOM
+//renders whole library to DOM
 function renderLibrary(){
   //reset DOM
   let del = document.querySelector("body > div");
@@ -79,7 +79,7 @@ function renderLibrary(){
     } else {
       read.style.backgroundColor = "red";
     }
-    
+
     book.appendChild(read);
 
     //remove element
