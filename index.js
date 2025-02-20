@@ -1,15 +1,24 @@
 const myLibrary = [];
 
-function Book(author, title, pages) {
+function Book(author, title, pages, read) {
   this.author = author;
   this.title = title;
   this.pages = pages;
+  this.read = read;
 }
 
-function addBookToLibrary(author, title, pages) {
-  const book = new Book(author, title, pages);
+Book.prototype.toggle = function(book) {
+  if (book.read == "yes"){
+    book.read = "no";
+  } else {
+    book.read = "yes";
+  }
+};
+
+function addBookToLibrary(author, title, pages, read) {
+  const book = new Book(author, title, pages, read);
   myLibrary.push(book);
-}
+};
 
 const openButton = document.querySelector("[data-open-modal]");
 const closeButton = document.querySelector("[data-close-modal]");
@@ -25,8 +34,9 @@ closeButton.addEventListener("click", (event) => {
   let author = document.querySelector("#author");
   let title = document.querySelector("#title");
   let pages = document.querySelector("#pages");
+  let read = document.querySelector("#read");
 
-  addBookToLibrary(author.value, title.value, pages.value);
+  addBookToLibrary(author.value, title.value, pages.value, read.value);
   console.log(myLibrary);
   modal.close();
 
@@ -36,6 +46,7 @@ closeButton.addEventListener("click", (event) => {
   author.value = "";
   title.value = "";
   pages.value = "";
+  read.value = "";
 })
 
 //renders library to DOM
@@ -60,8 +71,13 @@ function renderLibrary(){
 
     let read = document.createElement("button");
     read.textContent = "READ";
-    Book.prototype.status = false; //???
-    console.log(Book.prototype.status);
+    //set color to red if did not read, green if read
+    console.log(currBook.read);
+    if (currBook.read == "yes"){
+      read.style.backgroundColor = "lightgreen";
+    } else {
+      read.style.backgroundColor = "red";
+    }
     book.appendChild(read);
 
     remove.addEventListener("click", () => {
@@ -72,22 +88,14 @@ function renderLibrary(){
     })
 
     read.addEventListener("click", () => {
-      if (book.status){
-        book.status = false;
+      //toggle button color
+      let change = myLibrary[book.getAttribute("data-index-number")];
+      if (change.read == "yes"){
+        read.style.backgroundColor = "red";
       } else {
-        book.status = true;
+        read.style.backgroundColor = "lightgreen";
       }
-      console.log(book.status)
+      change.toggle(change);
     })
   }
 }
-
-//add button on each book to change "read" status
-// function toggle(book){
-//   if (book.prototype.status){
-//     book.prototype.status = false;
-//   } else {
-//     book.prototype.status = true;
-//   }
-//   console.log(book.prototype.status)
-// }
