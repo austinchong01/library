@@ -71,6 +71,7 @@ function renderLibrary(){
 
     let read = document.createElement("button");
     read.textContent = "READ";
+
     //set color to red if did not read, green if read
     console.log(currBook.read);
     if (currBook.read == "yes"){
@@ -78,23 +79,33 @@ function renderLibrary(){
     } else {
       read.style.backgroundColor = "red";
     }
+    
     book.appendChild(read);
 
+    //remove element
     remove.addEventListener("click", () => {
       let index = book.getAttribute("data-index-number");
+
+      //remove from Library
       myLibrary.splice(index, 1);
-      renderLibrary()
+      renderLibrary() //re-render new library
+
+      //remove from DOM
       book.remove();
     })
 
+    //toggle color and read status
     read.addEventListener("click", () => {
-      //toggle button color
       let change = myLibrary[book.getAttribute("data-index-number")];
+
+      //change color
       if (change.read == "yes"){
         read.style.backgroundColor = "red";
       } else {
         read.style.backgroundColor = "lightgreen";
       }
+
+      //change read status
       change.toggle(change);
     })
   }
