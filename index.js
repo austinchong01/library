@@ -52,57 +52,92 @@ closeButton.addEventListener("click", (event) => {
 //renders whole library to DOM
 function renderLibrary(){
   //reset DOM
-  let del = document.querySelector("body > div");
-  document.body.removeChild(del);
-  let library = document.createElement("div");
-  document.body.appendChild(library)
+  const del = document.querySelector("table");
+  del.remove();
 
+  const table = document.createElement("table");
+  const label = document.createElement("tr");
+  const labelAuthor = document.createElement("th");
+  labelAuthor.textContent = "Author";
+  const labelTitle = document.createElement("th");
+  labelTitle.textContent = "Title";
+  const labelPages = document.createElement("th");
+  labelPages.textContent = "Pages";
+  const labelRead = document.createElement("th");
+  labelRead.textContent = "Status";
+
+  label.appendChild(labelAuthor);
+  label.appendChild(labelTitle);
+  label.appendChild(labelPages);
+  label.appendChild(labelRead);
+  table.appendChild(label);
+  document.body.appendChild(table);
+
+  
   for (let i = 0; i < myLibrary.length; i++){
-    currBook = myLibrary[i];
+    let currBook = myLibrary[i];
 
-    let book = document.createElement("div");
-    book.textContent = currBook.title;
-    book.setAttribute("data-index-number", `${i}`);
-    library.appendChild(book);
+    //create row for one book
+    const book = document.createElement("tr");
+    book.setAttribute("data-index-number", `${i}`); //set attribute for index in myLibrary array
 
-    let remove = document.createElement("button");
-    remove.textContent = "REMOVE";
-    book.appendChild(remove);
+    //add author
+    const author = document.createElement("td");
+    author.textContent = currBook.author;
+    book.appendChild(author);
+    
+    //add title
+    const title = document.createElement("td");
+    title.textContent = currBook.title;
+    book.appendChild(title);
 
-    let read = document.createElement("button");
-    read.textContent = "READ";
+    //add pages
+    const pages = document.createElement("td");
+    pages.textContent = currBook.pages;
+    book.appendChild(pages);
 
+    //add read status
+    const readTD = document.createElement("td");
+    const readBtn = document.createElement("button");
+    readBtn.textContent = "READ";
     //set color to red if did not read, green if read
-    console.log(currBook.read);
     if (currBook.read == "yes"){
-      read.style.backgroundColor = "lightgreen";
+      readBtn.style.backgroundColor = "lightgreen";
     } else {
-      read.style.backgroundColor = "red";
+      readBtn.style.backgroundColor = "red";
     }
+    readTD.appendChild(readBtn)
+    book.appendChild(readTD);
 
-    book.appendChild(read);
+    //add remove button
+    const remTD = document.createElement("td");
+    const remBtn = document.createElement("button");
+    remBtn.textContent = "REMOVE";
+    remTD.appendChild(remBtn)
+    book.appendChild(remTD);
+
+    table.appendChild(book);
 
     //remove element
-    remove.addEventListener("click", () => {
-      let index = book.getAttribute("data-index-number");
+    remBtn.addEventListener("click", () => {
+      let index = parseInt(book.getAttribute("data-index-number"));
 
       //remove from Library
       myLibrary.splice(index, 1);
-      renderLibrary() //re-render new library
 
-      //remove from DOM
-      book.remove();
+      //re-render new library
+      renderLibrary();
     })
 
     //toggle color and read status
-    read.addEventListener("click", () => {
+    readBtn.addEventListener("click", () => {
       let change = myLibrary[book.getAttribute("data-index-number")];
 
       //change color
       if (change.read == "yes"){
-        read.style.backgroundColor = "red";
+        readBtn.style.backgroundColor = "red";
       } else {
-        read.style.backgroundColor = "lightgreen";
+        readBtn.style.backgroundColor = "lightgreen";
       }
 
       //change read status
@@ -110,3 +145,4 @@ function renderLibrary(){
     })
   }
 }
+
