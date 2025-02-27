@@ -1,19 +1,35 @@
 const myLibrary = [];
 
-function Book(author, title, pages, read) {
-  this.author = author;
-  this.title = title;
-  this.pages = pages;
-  this.read = read;
+class Read {
+  constructor(){
+
+  }
+  toggle(book){
+    if (book.read == "yes"){
+      book.read = "no";
+    } else {
+      book.read = "yes";
+    }
+  }
 }
 
-Book.prototype.toggle = function(book) {
-  if (book.read == "yes"){
-    book.read = "no";
-  } else {
-    book.read = "yes";
+class Book extends Read {
+  constructor (author, title, pages, read){
+    super();
+    this.author = author;
+    this.title = title;
+    this.pages = pages;
+    this.read = read;
   }
-};
+}
+
+// Book.prototype.toggle = function(book) {
+//   if (book.read == "yes"){
+//     book.read = "no";
+//   } else {
+//     book.read = "yes";
+//   }
+// };
 
 function addBookToLibrary(author, title, pages, read) {
   const book = new Book(author, title, pages, read);
